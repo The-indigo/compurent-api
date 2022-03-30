@@ -78,12 +78,13 @@ let strategy = new JWTStrategy(jwtOptions, (jwt_payload, done) => {
 
 passport.use(strategy)
 
-app.use('/', (req, res, nex) => {
-  res.send("Computer rentals Api")
-})
+
 app.use('/api', userRouter);
 app.use('/api/computers',computerRouter)
 
+app.use('/', (req, res, nex) => {
+  res.send("Computer rentals Api")
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
