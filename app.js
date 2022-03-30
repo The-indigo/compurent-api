@@ -78,6 +78,9 @@ let strategy = new JWTStrategy(jwtOptions, (jwt_payload, done) => {
 
 passport.use(strategy)
 
+app.use('/', (req, res, nex) => {
+  res.send("Computer rentals Api")
+})
 app.use('/api', userRouter);
 app.use('/api/computers',computerRouter)
 
