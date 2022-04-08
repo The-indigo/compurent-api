@@ -23,8 +23,6 @@ let ExtractJWT = passportJWT.ExtractJwt;
 
 let localStrategy = passportLocal.Strategy;
 
-require("dotenv").config();
-
 const mongoose = require('mongoose')
 
 
@@ -33,15 +31,11 @@ const userRouter = require('./routes/user');
 const computerRouter= require('./routes/computer')
 
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 //initializing session midleware
 app.use(session({
