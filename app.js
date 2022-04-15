@@ -20,21 +20,23 @@ let JWTStrategy = passportJWT.Strategy;
 let ExtractJWT = passportJWT.ExtractJwt;
 
 
-let localStrategy = passportLocal.Strategy;
+// let localStrategy = passportLocal.Strategy;
 
 const mongoose = require('mongoose')
 
 
 
 const userRouter = require('./routes/user');
-const computerRouter= require('./routes/computer')
+const computerRouter = require('./routes/computer')
+const basketRouter= require('./routes/basket')
+
 
 
 
 app.use(logger('dev'));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 //initializing session midleware
 app.use(session({
@@ -52,8 +54,21 @@ app.use(passport.session())
 
 passport.use(User.createStrategy())
 
-passport.serializeUser(User.serializeUser())
-passport.deserializeUser(User.deserializeUser())
+// passport.serializeUser(User.serializeUser())
+// passport.deserializeUser(User.deserializeUser())
+
+passport.serializeUser(function (user, done) {
+   console.log('serialize user called, user:', user);
+  done(null, user._id);
+});
+
+passport.deserializeUser(function (id, done) {
+   console.log('deserialize user called, user:', id);
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
 
 let jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken()
@@ -61,7 +76,7 @@ jwtOptions.secretOrKey = process.env.Secret
 
 let strategy = new JWTStrategy(jwtOptions, (jwt_payload, done) => {
     User.findById(jwt_payload.id)
-        .then(user => {
+      .then(user => {
       return done(null, user);
     })
     .catch(err => {
@@ -73,7 +88,8 @@ passport.use(strategy)
 
 
 app.use('/api', userRouter);
-app.use('/api/computers',computerRouter)
+app.use('/api/computers', computerRouter)
+app.use('/api/basket',  basketRouter)
 
 app.use('/', (req, res, nex) => {
   res.send("Computer rentals Api")
@@ -107,7 +123,8 @@ mongoose
   })
   .then(() => {
       console.log("Database connected");
-       app.listen(process.env.PORT || 80);
+    app.listen(process.env.PORT || 80);
+
   })
     .catch((err) => console.log(`connection error ${err}`));
 
