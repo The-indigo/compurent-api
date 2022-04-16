@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
-const BasketSchema = new Schema({
+const basketSchema = new Schema({
          basketOwner: {
         type: mongoose.Schema.ObjectId,
          ref:'User'
     },
-  device: [{
+  devices: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Computer',
   }
@@ -17,4 +17,4 @@ const BasketSchema = new Schema({
 })
 
 
-module.exports=mongoose.model('Basket', BasketSchema)
+module.exports=mongoose.model('Basket', basketSchema)
