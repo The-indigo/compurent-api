@@ -2,7 +2,7 @@ const Computers = require('../models/computer');
 
 exports.getComputers = async (req, res, next) => {
     try {
-        console.log(req.session)
+        console.log(req.isAuthenticated())
         const computers = await Computers.find();
         if (!computers) {
             return res.status(400).json({failed: true, message: 'Error getting computers'});

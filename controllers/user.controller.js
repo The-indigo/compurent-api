@@ -37,9 +37,7 @@ exports.login = (req, res, next) => {
 
             const authToken = jwt.sign(payload, process.env.Secret, {
                 expiresIn: 604800 // 1 week
-            });
-console.log(req.session);
-            
+            });         
             return res.status(200).json({success: true, message: 'User Logged in Successfully!', user:payload, token: authToken});
         });
     })(req, res, next);
