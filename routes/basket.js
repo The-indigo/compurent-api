@@ -4,6 +4,10 @@ let passport = require('passport');
 
 let basketController = require('../controllers/basket.controller');
 
-router.post('/add/:deviceId',passport.authenticate('jwt', {session: false}), basketController.addToBasket);
+router.get('/',passport.authenticate('jwt', {session: false}), basketController.viewBasket);
+router.get('/all',basketController.viewAllBasket);
+router.post('/add/:deviceId', passport.authenticate('jwt', { session: false }), basketController.addToBasket);
+router.delete('/', basketController.deleteBasket);
+
 
 module.exports = router;

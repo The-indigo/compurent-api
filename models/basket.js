@@ -6,14 +6,10 @@ const basketSchema = new Schema({
         type: mongoose.Schema.ObjectId,
          ref:'User'
     },
-  devices: [{
+  device: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Computer',
-  }
-        
-    ] 
-
-        
+  }  
 })
 
 
