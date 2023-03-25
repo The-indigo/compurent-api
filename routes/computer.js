@@ -8,11 +8,15 @@ router.get('/', computerController.getComputers);
 
 router.get('/:id', computerController.getComputerById);
 
-router.post('/add',passport.authenticate('jwt', {session: false}),computerController.addComputers);
+router.post('/add', passport.authenticate('jwt', {
+    session: false
+}), computerController.addComputers);
 
-router.post('/edit/:id',passport.authenticate('jwt', {session: false}),  computerController.updateComputer);
+router.post('/edit/:id', computerController.updateComputer);
 
-router.get('/delete/:id', passport.authenticate('jwt', {session: false}), computerController.deleteComputer);
+router.get('/delete/:id', passport.authenticate('jwt', {
+    session: false
+}), computerController.deleteComputer);
 
 
 module.exports = router;
